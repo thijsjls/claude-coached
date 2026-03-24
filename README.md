@@ -16,7 +16,7 @@ An AI cycling coach powered by [Claude Code](https://docs.anthropic.com/en/docs/
 
 1. **Clone** the repo
    ```bash
-   git clone https://github.com/thijssluijter/claude-coached.git
+   git clone https://github.com/thijsjls/claude-coached.git
    cd claude-coached
    ```
 

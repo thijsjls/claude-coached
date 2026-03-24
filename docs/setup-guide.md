@@ -12,7 +12,7 @@ This guide walks you through setting up Claude Coached as your personal AI cycli
 ## Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/thijssluijter/claude-coached.git
+git clone https://github.com/thijsjls/claude-coached.git
 cd claude-coached
 ```
 
