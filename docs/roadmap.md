@@ -1,6 +1,6 @@
 # Roadmap
 
-Feature ideas and future directions for Claude Coached. Contributions welcome — see [CONTRIBUTING.md](../CONTRIBUTING.md).
+Feature ideas and future directions for Claude Coached. This is an unprioritised long list — not a commitment or a sequence. Contributions welcome — see [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## New Skills
 
@@ -16,6 +16,7 @@ Feature ideas and future directions for Claude Coached. Contributions welcome �
 - **Weather API** — Factor weather into outdoor ride planning (heat, wind, rain)
 - **[TrainingPeaks](https://www.trainingpeaks.com/)** — Import/export workouts for athletes already on the platform
 - **Wahoo / Garmin Connect** — Direct device sync for athletes not on Strava
+- **Indoor apps (Zwift, Rouvy, MyWhoosh, etc.)** — Push structured workouts to indoor platforms, pull completed ride data back
 - **Nutrition tracking** — Integration with MyFitnessPal or similar for fueling analysis
 
 ## Coaching Enhancements
@@ -32,6 +33,7 @@ Feature ideas and future directions for Claude Coached. Contributions welcome �
 
 - **CTL/ATL/TSB charts** — Generate fitness/fatigue/form plots from training log data
 - **Season summaries** — End-of-season report with progression, highlights, year-over-year comparison
+- **Workout library** — Generate structured workout files (.zwo, .fit, .erg) ready to sync to head units or indoor apps
 - **Equipment tracking** — Component mileage, maintenance reminders, tire/chain wear estimates
 - **Export/import** — Backup and restore athlete data, migrate between setups
 - **Multi-athlete support** — Coach multiple athletes from separate data directories

@@ -16,6 +16,10 @@ git clone https://github.com/thijssluijter/claude-coached.git
 cd claude-coached
 ```
 
+## Tip: Let Claude Help You Set Up
+
+You don't have to follow this guide alone. Once you've cloned the repo, run `claude` in the project directory and ask it to help you set up the MCP servers. Claude Code is great at walking you through OAuth flows, finding the right config values, and debugging connection issues. This is especially useful for the Strava and Google Calendar MCP setup — it can guide you step by step.
+
 ## Step 2: Set Up the Strava MCP Server
 
 The coach reads your workout data from Strava via an MCP server.
