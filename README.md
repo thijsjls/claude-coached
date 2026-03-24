@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/cover.svg" alt="Claude Coached" width="100%">
+</p>
+
 # Claude Coached
 
 An AI cycling coach powered by [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Clone, fill in your profile, connect Strava and Google Calendar, and get a personal coach that analyses workouts, builds training plans, and adapts to your life.
