@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/cover.svg" alt="Claude Coached" width="100%">
+  <img src="assets/claude-coached-cover.png" alt="Claude Coached" width="100%">
 </p>
 
 # Claude Coached
