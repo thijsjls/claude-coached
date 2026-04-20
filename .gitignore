@@ -1,3 +1,8 @@
 .claude/settings.local.json
 .claude/projects/
 .DS_Store
+
+# Intervals.icu MCP server runtime files
+intervals-icu-mcp/.env
+intervals-icu-mcp/.venv/
+intervals-icu-mcp/__pycache__/

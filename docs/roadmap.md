@@ -12,11 +12,11 @@ Feature ideas and future directions for Claude Coached. This is an unprioritised
 
 ## New Integrations
 
-- **[intervals.icu](https://intervals.icu/)** — Richer analytics, fitness/fatigue charts, power curve tracking
+- ~~**[intervals.icu](https://intervals.icu/)** — Richer analytics, fitness/fatigue charts, power curve tracking~~ ✓ Integrated
 - **Weather API** — Factor weather into outdoor ride planning (heat, wind, rain)
 - **[TrainingPeaks](https://www.trainingpeaks.com/)** — Import/export workouts for athletes already on the platform
-- **Wahoo / Garmin Connect** — Direct device sync for athletes not on Strava
-- **Indoor apps (Zwift, Rouvy, MyWhoosh, etc.)** — Push structured workouts to indoor platforms, pull completed ride data back
+- ~~**Wahoo / Garmin Connect** — Direct device sync for athletes not on Strava~~ ✓ Via Intervals.icu
+- ~~**Indoor apps (Zwift, Rouvy, MyWhoosh, etc.)** — Push structured workouts to indoor platforms, pull completed ride data back~~ ✓ Zwift via Intervals.icu
 - **Nutrition tracking** — Integration with MyFitnessPal or similar for fueling analysis
 
 ## Coaching Enhancements
@@ -31,7 +31,7 @@ Feature ideas and future directions for Claude Coached. This is an unprioritised
 
 ## Quality of Life
 
-- **CTL/ATL/TSB charts** — Generate fitness/fatigue/form plots from training log data
+- ~~**CTL/ATL/TSB charts** — Generate fitness/fatigue/form plots from training log data~~ ✓ Available via Intervals.icu
 - **Season summaries** — End-of-season report with progression, highlights, year-over-year comparison
 - **Workout library** — Generate structured workout files (.zwo, .fit, .erg) ready to sync to head units or indoor apps
 - **Equipment tracking** — Component mileage, maintenance reminders, tire/chain wear estimates

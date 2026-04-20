@@ -48,16 +48,23 @@ Periodically (especially at weekly reviews or when planning), ask about:
 When asked to analyse a workout (or after fetching a recent activity):
 
 ### 1. Fetch Data
-- Use `get-activity-details` for summary metrics
-- Use `get-activity-laps` for interval breakdown
-- Use `get-activity-streams` with `streams=watts,heartrate,cadence,time` for raw data
+- **Prefer Intervals.icu** for computed metrics: use the Intervals.icu MCP to fetch activity details, which include pre-computed NP, IF, TSS, zone distribution, and best efforts.
+- **Use Strava** for raw stream data when deeper analysis is needed: `get-activity-streams` with `streams=watts,heartrate,cadence,time` for interval-by-interval analysis, power fade detection, or aerobic decoupling.
+- Use `get-activity-laps` (Strava) for interval breakdown if not available from Intervals.icu.
 
-### 2. Compute Key Metrics
-From the power stream data, calculate:
+### 2. Key Metrics
+Intervals.icu auto-calculates these from synced Strava activities:
 
-- **Normalized Power (NP)**: Take 30-second rolling average of power → raise each value to 4th power → take mean → take 4th root
+- **Normalized Power (NP)**
 - **Intensity Factor (IF)**: NP / FTP
-- **Training Stress Score (TSS)**: (duration_seconds × NP × IF) / (FTP × 3600) × 100
+- **Training Stress Score (TSS)**
+- **Zone distribution**: time in each power/HR zone
+
+If the activity hasn't synced to Intervals.icu yet, calculate manually from Strava power streams:
+- **NP**: 30-second rolling average of power → raise each value to 4th power → take mean → take 4th root
+- **TSS**: (duration_seconds × NP × IF) / (FTP × 3600) × 100
+
+Always compute these yourself (not available in Intervals.icu summary):
 - **Variability Index (VI)**: NP / average power
 - **Efficiency Factor (EF)**: NP / average HR
 
@@ -75,7 +82,7 @@ For each lap/interval:
 - <5% = good aerobic fitness; >5% = aerobic limiter
 
 ### 5. Compare Against Prescription
-- Read the corresponding Google Calendar event description for the prescribed workout
+- Read the prescribed workout from Intervals.icu calendar events (structured targets) or Google Calendar (human-readable description)
 - Compare actual vs prescribed: power targets, interval durations, total load
 - Note compliance and deviations
 
@@ -97,7 +104,7 @@ When building or adjusting the training plan:
 ### 1. Gather Context
 - Read race calendar and goals from `data/athlete.md`
 - Check Google Calendar for scheduling constraints
-- Review current fitness (CTL/ATL/TSB) from `data/training-log.md`
+- Read current fitness (CTL/ATL/TSB) from Intervals.icu, cross-reference with `data/training-log.md` for context
 
 ### 2. Periodization
 Work backward from A-races:
@@ -128,29 +135,92 @@ Cool-down: 10min Z1
 Notes: [coaching cues, RPE guidance]
 ```
 
-### 5. Update Plan File
+### 5. Push Workouts to Devices
+For each workout in the plan, create a structured workout in Intervals.icu using the MCP server. Intervals.icu auto-syncs to connected devices (Garmin, Wahoo, Zwift, etc. — see `data/athlete.md` for connected platforms).
+
+See the **Workout Creation & Device Sync** section below for workout syntax and the dual-calendar approach.
+
+### 6. Update Plan File
 Update `data/training-plan.md` with current mesocycle overview.
+
+## Workout Creation & Device Sync
+
+When creating workouts, push them to the athlete's devices via Intervals.icu so structured workouts appear on their head unit (Garmin Edge, Wahoo ELEMNT, etc.) or indoor app (Zwift).
+
+### Creating a Workout
+1. Use the Intervals.icu MCP to create a calendar event with:
+   - Date and time (ISO format: `2026-04-21T08:00:00`)
+   - Workout name and category (`WORKOUT`, `RACE`, `NOTE`)
+   - Structured workout description using Intervals.icu syntax (see below)
+2. Also create a human-readable event on the **Google Calendar "Sport" calendar** with the same workout details — this gives the athlete a clear view of what's planned alongside their life calendar.
+3. Intervals.icu auto-syncs planned workouts to all connected devices.
+
+### Intervals.icu Workout Syntax
+Use this text-based syntax in the workout description:
+
+**Format:** `[duration] [target] [optional cadence]`
+
+| Element | Examples | Notes |
+|---------|----------|-------|
+| Duration | `5m`, `5m30s`, `1h`, `30s` | Minutes, seconds, hours |
+| Power target | `95%`, `250W`, `Z4` | % of FTP, absolute watts, or zone |
+| HR target | `70% HR`, `Z3 HR` | Append `HR` for heart rate targets |
+| Cadence | `90rpm` | Optional, appended after target |
+| Intervals | `4x 8m 95% 3m 55%` | Repeat × on-duration on-target off-duration off-target |
+| Ramps | `10m 50-75%` | Ramp from start to end over duration |
+
+**Example workouts:**
+
+Sweetspot intervals:
+```
+- 15m 55-75%
+- 3x 1m 90% 1m 55%
+- 4x 8m 88-93% 4m 55%
+- 10m 50%
+```
+
+VO2max session:
+```
+- 15m 55-75%
+- 5x 4m 108% 4m 50%
+- 10m 50%
+```
+
+Endurance ride (no structured intervals needed — just set as a note):
+```
+- 180m 56-75%
+```
+
+### Dual Calendar Approach
+- **Google Calendar** ("Sport" calendar): Human-readable schedule. The athlete sees what's planned alongside work, travel, and social events. Use the format from the Training Plan Protocol above.
+- **Intervals.icu**: Structured workouts with power targets that sync to devices. Uses the workout syntax above.
+- When creating a training week, create events in **both** calendars.
+- When the athlete completes a workout, it auto-syncs back from Strava → Intervals.icu with computed metrics.
 
 ## Weekly Review Protocol
 
 At the end of each training week (or when asked):
 
-1. Fetch all Strava activities for the week using `get-recent-activities`
-2. For each activity, compute TSS (or fetch if already logged)
+1. Fetch all activities for the week from Intervals.icu — each activity already has TSS, NP, IF computed
+2. Read current fitness metrics from Intervals.icu:
+   - **CTL** (Fitness) — 42-day exponential weighted average
+   - **ATL** (Fatigue) — 7-day exponential weighted average
+   - **TSB** (Form) — CTL minus ATL
 3. Compare planned vs actual:
+   - Read planned workouts from Intervals.icu calendar events
    - Total TSS planned vs completed
    - Session compliance (did they do what was prescribed?)
-   - Intensity distribution (time in zones)
-4. Calculate weekly totals:
+   - Intensity distribution (time in zones — available per activity from Intervals.icu)
+4. Summarise weekly totals:
    - Total TSS, total hours, number of sessions
-   - Acute Training Load (ATL) — 7-day rolling TSS avg
-   - Chronic Training Load (CTL) — 42-day rolling TSS avg
-   - Training Stress Balance (TSB) = CTL - ATL
+   - Current CTL/ATL/TSB and trend direction
+   - Power curve changes (any new bests?)
 5. Update `data/training-log.md` with weekly summary
 6. Adjust next week's plan if needed:
    - High fatigue (TSB < -30): reduce load
    - Missed sessions: redistribute key workouts
    - Signs of overreaching: extra recovery
+   - If adjusting, update both Google Calendar and Intervals.icu events
 
 ## Key Metrics Reference
 

@@ -107,3 +107,8 @@ Example:
 <!-- FILL IN: Your Google Calendar ID for the "Sport" calendar where workout events will be created.
 To find it: Google Calendar → Settings → select your sport calendar → "Integrate calendar" → Calendar ID
 Example: abc123xyz@group.calendar.google.com -->
+
+## Intervals.icu
+
+- **Athlete ID**: <!-- FILL IN: visible in your Intervals.icu URL — e.g. i123456 -->
+- **Connected platforms**: <!-- FILL IN: which devices auto-sync via Intervals.icu — e.g. Garmin Connect, Wahoo, Zwift -->

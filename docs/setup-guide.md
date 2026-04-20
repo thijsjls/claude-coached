@@ -5,8 +5,10 @@ This guide walks you through setting up Claude Coached as your personal AI cycli
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and working
+- [uv](https://docs.astral.sh/uv/) installed (Python package manager — used by Strava and Intervals.icu MCP servers)
 - A [Strava](https://www.strava.com/) account with activities (ideally with a power meter)
 - A [Google Calendar](https://calendar.google.com/) account
+- An [Intervals.icu](https://intervals.icu/) account (free — for analytics and device sync)
 - Basic comfort with the command line
 
 ## Step 1: Clone the Repository
@@ -120,7 +122,62 @@ Add the Google Calendar MCP server to your `.claude/settings.local.json`:
 
 This keeps your training events separate from your personal/work calendar.
 
-## Step 4: Fill In Your Athlete Profile
+## Step 4: Set Up the Intervals.icu MCP Server
+
+Intervals.icu provides training analytics (CTL/ATL/TSB, power curves, zone analysis) and syncs structured workouts to your devices (Garmin, Wahoo, Zwift, COROS, and more).
+
+### 4a. Create an Intervals.icu Account
+
+1. Go to [intervals.icu](https://intervals.icu/) and sign up (free)
+2. **Connect Strava**: Settings → Connections → Link Strava account. Activities will auto-sync.
+3. **Connect your devices**: Settings → Connections → Link Garmin / Wahoo / Zwift / etc. This enables automatic workout sync — planned workouts will appear on your device.
+4. Note your **Athlete ID** — visible in the URL when logged in: `intervals.icu/athlete/{id}` (e.g. `i123456`)
+
+### 4b. Generate an API Key
+
+1. Go to [Intervals.icu Settings](https://intervals.icu/settings)
+2. Scroll to **Developer**
+3. Generate an API key
+4. Save it somewhere safe — you'll need it for the config
+
+### 4c. Install the Intervals.icu MCP Server
+
+The [Intervals.icu MCP server](https://github.com/eddmann/intervals-icu-mcp) is bundled in `intervals-icu-mcp/` with patches for known API issues. Install its dependencies and configure authentication:
+
+```bash
+cd intervals-icu-mcp
+uv sync
+uv run intervals-icu-mcp-auth
+cd ..
+```
+
+The auth command will prompt you for your API key and athlete ID, storing them in a local `.env` file.
+
+### 4d. Configure in Claude Code
+
+Add the Intervals.icu MCP server to your project's `.mcp.json` (create it in the project root if it doesn't exist):
+
+```json
+{
+  "mcpServers": {
+    "intervals-icu": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "--directory", "/absolute/path/to/claude-coached/intervals-icu-mcp", "intervals-icu-mcp"]
+    }
+  }
+}
+```
+
+Replace `/absolute/path/to/claude-coached` with the actual path to your project directory.
+
+### 4e. Verify the Connection
+
+Start Claude Code and ask: **"Can you fetch my recent activities from Intervals.icu?"**
+
+If it works, you'll see activity data with pre-computed metrics (TSS, NP, IF). The coach will use these instead of calculating them manually from Strava streams.
+
+## Step 5: Fill In Your Athlete Profile
 
 Open `data/athlete.md` and fill in the placeholders. See `examples/athlete.example.md` for a complete example.
 
@@ -130,10 +187,11 @@ At minimum, fill in:
 - **Training availability** — hours per week and weekly pattern
 - **Race calendar** — upcoming events with priorities
 - **Sport Calendar ID** — from Step 3d
+- **Intervals.icu Athlete ID** — from Step 4a
 
 The more detail you provide, the better the coaching will be. But you can always add more later — the coach will ask for what it needs.
 
-## Step 5: Start Coaching
+## Step 6: Start Coaching
 
 ```bash
 cd claude-coached
@@ -166,6 +224,11 @@ The coach will read your athlete profile and start the conversation. Try:
 ### Coach gives wrong zone targets
 - Double-check your FTP in `data/athlete.md` — all zones are derived from this
 - If your FTP feels wrong (workouts feel too easy or too hard), ask the coach to help you estimate it from recent data
+
+### Intervals.icu RACE category returns 400 error
+- The `RACE` event category triggers a different API schema in Intervals.icu and returns a 400 JSON parse error when creating events
+- **Workaround**: Use `WORKOUT` category with race details in the description. The coach handles this automatically.
+- This is an upstream Intervals.icu API issue, not a bug in the MCP server
 
 ### Settings file not found
 - `.claude/settings.local.json` is created in the project directory, not your home directory
