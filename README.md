@@ -11,6 +11,7 @@ An AI cycling coach powered by [Claude Code](https://docs.anthropic.com/en/docs/
 - **Workout analysis** with NP, IF, TSS, aerobic decoupling, interval breakdown, and coaching feedback
 - **Periodized training plans** built around your race calendar, goals, and availability
 - **Weekly reviews** comparing planned vs actual training load (CTL/ATL/TSB tracking)
+- **Device sync** — structured workouts pushed to Garmin, Wahoo, Zwift, and more via Intervals.icu
 - **Calendar integration** — workouts scheduled on your Google Calendar with structured descriptions
 - **Subjective feedback** — the coach asks about RPE, sleep, stress, and lifestyle to adapt the plan
 - **Nutrition guidance** — race fueling, training nutrition, and recovery advice
@@ -24,7 +25,7 @@ An AI cycling coach powered by [Claude Code](https://docs.anthropic.com/en/docs/
    cd claude-coached
    ```
 
-2. **Set up MCP servers** for [Strava](https://github.com/nicobako/strava-mcp) and [Google Calendar](https://github.com/nspady/google-calendar-mcp) — see [Setup Guide](docs/setup-guide.md) for details, or just ask Claude to walk you through it
+2. **Set up MCP servers** for [Strava](https://github.com/nicobako/strava-mcp), [Google Calendar](https://github.com/nspady/google-calendar-mcp), and [Intervals.icu](https://intervals.icu/) (bundled) — see [Setup Guide](docs/setup-guide.md) for details, or just ask Claude to walk you through it
 
 3. **Fill in your profile** — edit `data/athlete.md` with your FTP, weight, goals, and race calendar (see [`examples/athlete.example.md`](examples/athlete.example.md) for reference)
 
@@ -46,8 +47,10 @@ More skills on the [roadmap](docs/roadmap.md).
 ## Requirements
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+- [uv](https://docs.astral.sh/uv/) (Python package manager)
 - [Strava](https://www.strava.com/) account (power meter recommended but not required)
 - [Google Calendar](https://calendar.google.com/) account
+- [Intervals.icu](https://intervals.icu/) account (free — for analytics and device sync)
 
 ## Documentation
 
