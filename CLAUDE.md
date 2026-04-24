@@ -166,23 +166,45 @@ Use this text-based syntax in the workout description:
 | Power target | `95%`, `250W`, `Z4` | % of FTP, absolute watts, or zone |
 | HR target | `70% HR`, `Z3 HR` | Append `HR` for heart rate targets |
 | Cadence | `90rpm` | Optional, appended after target |
-| Intervals | `4x 8m 95% 3m 55%` | Repeat × on-duration on-target off-duration off-target |
 | Ramps | `10m 50-75%` | Ramp from start to end over duration |
+
+**Important:** Each interval step must be its own line. There is no `Nx` repeat syntax — spell out every work and recovery interval individually.
 
 **Example workouts:**
 
 Sweetspot intervals:
 ```
 - 15m 55-75%
-- 3x 1m 90% 1m 55%
-- 4x 8m 88-93% 4m 55%
+- 1m 90%
+- 1m 55%
+- 1m 90%
+- 1m 55%
+- 1m 90%
+- 1m 55%
+- 8m 88-93%
+- 4m 55%
+- 8m 88-93%
+- 4m 55%
+- 8m 88-93%
+- 4m 55%
+- 8m 88-93%
+- 4m 55%
 - 10m 50%
 ```
 
 VO2max session:
 ```
 - 15m 55-75%
-- 5x 4m 108% 4m 50%
+- 4m 108%
+- 4m 50%
+- 4m 108%
+- 4m 50%
+- 4m 108%
+- 4m 50%
+- 4m 108%
+- 4m 50%
+- 4m 108%
+- 4m 50%
 - 10m 50%
 ```
 
