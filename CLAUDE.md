@@ -170,6 +170,8 @@ Use this text-based syntax in the workout description:
 
 **Important:** Each interval step must be its own line. There is no `Nx` repeat syntax — spell out every work and recovery interval individually.
 
+**MCP formatting:** When passing workout descriptions to the Intervals.icu MCP `create_event` tool, each step MUST be separated by an actual newline character — NOT a literal `\n` string. The description is a JSON string parameter, so use real line breaks within the string value. Literal `\n` text will be double-escaped and Intervals.icu won't parse the workout steps. Keep the workout syntax (the `- Xm Y%` lines) at the START of the description, followed by any free-text notes after a blank line.
+
 **Example workouts:**
 
 Sweetspot intervals:
