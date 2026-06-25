@@ -20,6 +20,7 @@ from .models import (
     Histogram,
     HRCurve,
     Interval,
+    IntervalsDTO,
     PaceCurve,
     PowerCurve,
     SportSettings,
@@ -683,8 +684,8 @@ class ICUClient:
             List of Interval objects
         """
         response = await self._request("GET", f"/activity/{activity_id}/intervals")
-        adapter = TypeAdapter(list[Interval])
-        return adapter.validate_python(response.json())
+        dto = IntervalsDTO(**response.json())
+        return dto.icu_intervals or []
 
     async def get_activity_streams(
         self,

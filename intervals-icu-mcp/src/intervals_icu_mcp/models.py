@@ -316,6 +316,14 @@ class FitnessSummary(BaseModel):
 # ==================== Activity Interval Models ====================
 
 
+class IntervalsDTO(BaseModel):
+    """Wrapper returned by GET /activity/{id}/intervals."""
+
+    id: str | None = None
+    analyzed: datetime | None = None
+    icu_intervals: list["Interval"] | None = None
+
+
 class Interval(BaseModel):
     """Activity interval data."""
 
